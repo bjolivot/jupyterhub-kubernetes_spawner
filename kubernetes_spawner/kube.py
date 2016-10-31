@@ -12,6 +12,7 @@ from .swagger_client.models.v1_env_var_source import V1EnvVarSource
 from .swagger_client.models.v1_volume import V1Volume
 from .swagger_client.models.v1_volume_mount import V1VolumeMount
 from .swagger_client.models.v1_persistent_volume_claim_volume_source import V1PersistentVolumeClaimVolumeSource
+from .swagger_client.models.v1_nfs_volume_source import V1NFSVolumeSource
 from .swagger_client.models.v1_object_field_selector import V1ObjectFieldSelector
 from .swagger_client.models.v1_resource_requirements import V1ResourceRequirements
 
