@@ -53,6 +53,38 @@ class KubernetesSpawner(Spawner):
         )
     )
 
+
+    nfs_server_share = Unicode(
+        "",
+        config=True,
+        help=dedent(
+            """
+            The share path on the nfs server (present in /etc/exports)
+            """
+        )
+    )
+
+    nfs_server_ip = Unicode(
+        "",
+        config=True,
+        help=dedent(
+            """
+            Nfs Server IP Address
+            """
+        )
+    )
+
+    nfs_local_mount_path = Unicode(
+        "/mnt",
+        config=True,
+        help=dedent(
+            """
+            Where nfs share will be mounted
+            """
+        )
+    )
+
+
     hub_ip = Unicode(
         "",
         config=True,
@@ -127,7 +159,14 @@ class KubernetesSpawner(Spawner):
             for env_name, env_value in self.get_env_vars().items():
                 container.add_env(env_name, env_value)
             # Mount volume to persist notebooks
-            if self.persistent_volume_claim_name and self.persistent_volume_claim_path:
+            if self.nfs_local_mount_path and self.nfs_server_ip and self.nfs_server_share:
+                vol_name = "notebooks"
+                new_pod.add_nfs_volume(vol_name, self.nfs_server_ip, self.nfs_server_share)
+                volume_path = self.nfs_local_mount_path
+                if '{username}' in volume_path:
+                    volume_path = volume_path.format(username=self.user.name)
+                container.add_volume(vol_name, volume_path)
+            elif self.persistent_volume_claim_name and self.persistent_volume_claim_path:
                 vol_name = "notebooks"
                 new_pod.add_pvc_volume(vol_name, self.persistent_volume_claim_name)
                 volume_path = self.persistent_volume_claim_path
