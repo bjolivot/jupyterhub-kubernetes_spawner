@@ -108,7 +108,7 @@ class Pod(V1Pod):
     def add_nfs_volume(self, name, nfs_server_ip, nfs_server_share):
         volume = V1Volume()
         volume.name = name
-        nfs_source =  v1.NFSVolumeSource()
+        nfs_source =  V1NFSVolumeSource()
         nfs_source.server = nfs_server_ip
         nfs_source.path = nfs_server_share
         volume.nfs = nfs_source
