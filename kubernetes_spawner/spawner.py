@@ -83,7 +83,34 @@ class KubernetesSpawner(Spawner):
             """
         )
     )
-
+    
+    glusterfs_endpoint = Unicode(
+        config=True,
+        help=dedent(
+            """
+            GlusterFS Endpoint
+            """
+        )
+    )
+    
+    glusterfs_path = Unicode(
+        config=True,
+        help=dedent(
+            """
+            GlusterFS Share Name
+            """
+        )
+    )
+    
+    volume_mountpath = Unicode(
+        "/mnt",
+        config=True,
+        help=dedent(
+            """
+            Volume Mount Path
+            """
+        )
+    )
 
     hub_ip = Unicode(
         "",
