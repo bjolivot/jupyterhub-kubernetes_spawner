@@ -15,6 +15,7 @@ from .swagger_client.models.v1_persistent_volume_claim_volume_source import V1Pe
 from .swagger_client.models.v1_nfs_volume_source import V1NFSVolumeSource
 from .swagger_client.models.v1_object_field_selector import V1ObjectFieldSelector
 from .swagger_client.models.v1_resource_requirements import V1ResourceRequirements
+from .swagger_client.models.v1_glusterfs_volume_source import V1GlusterfsVolumeSource
 
 
 class KubernetesClient(object):
@@ -113,6 +114,16 @@ class Pod(V1Pod):
         nfs_source.server = nfs_server_ip
         nfs_source.path = nfs_server_share
         volume.nfs = nfs_source
+        self.spec.volumes.append(volume)
+
+    def add_glusterfs_volume(self, name, gluster_endpoint, gluster_path):
+        volume = V1Volume()
+        volume.name = name
+        gfs_source = V1GlusterfsVolumeSource()
+        gfs_source.read_only = False
+        gfs_source.endpoints = gluster_endpoint
+        gfs_source.path = gluster_path
+        volume.glusterfs = gfs_source
         self.spec.volumes.append(volume)
 
 
