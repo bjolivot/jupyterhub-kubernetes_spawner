@@ -112,6 +112,15 @@ class KubernetesSpawner(Spawner):
         )
     )
 
+    volume_mode = Unicode(
+        config=True,
+        help=dedent(
+            """
+            Mode for Volume Mount (nfs, glusterfs or persistent_volume_claim)
+            """
+        )
+    )
+
     hub_ip = Unicode(
         "",
         config=True,
